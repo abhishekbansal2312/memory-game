@@ -1,5 +1,4 @@
 import React from "react";
-import { Card, CardActionArea } from "@mui/material";
 
 const SingleCard = ({ card, handleChoice, flipped, disabled }) => {
   const handleClick = () => {

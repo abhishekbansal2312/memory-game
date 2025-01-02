@@ -51,32 +51,17 @@ const gameSlice = createSlice({
         }
         state.choiceOne = null;
         state.choiceTwo = null;
+        state.isWin = state.cards.every((card) => card.matched);
       }
     },
     resetTurn(state) {
       state.turns += 1;
       state.disabled = false;
     },
-    setWin(state) {
-      if (state.cards.every((card) => card.matched)) {
-        state.isWin = true;
-      }
-    },
-    checkForWin(state) {
-      const allMatched = state.cards.every((card) => card.matched);
-      if (allMatched) {
-        state.isWin = true;
-      }
-    },
   },
 });
 
-export const {
-  shuffleCards,
-  makeChoice,
-  compareCards,
-  resetTurn,
-  setWin,
-  checkForWin,
-} = gameSlice.actions;
+export const { shuffleCards, makeChoice, compareCards, resetTurn } =
+  gameSlice.actions;
+
 export default gameSlice.reducer;

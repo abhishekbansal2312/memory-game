@@ -6,7 +6,6 @@ import {
   makeChoice,
   compareCards,
   resetTurn,
-  setWin,
 } from "../slices/gameSlice";
 import { Button, Typography, Box } from "@mui/material";
 
@@ -22,7 +21,6 @@ const Game = () => {
 
   const handleCardChoice = (card) => {
     dispatch(makeChoice(card));
-    dispatch(setWin());
 
     if (choiceOne && !choiceTwo) {
       setTimeout(() => {
@@ -47,21 +45,22 @@ const Game = () => {
         variant="contained"
         color="primary"
         onClick={handleNewGame}
-        className="m-12" // This applies margin using Tailwind CSS
-        sx={{ margin: "12px" }} // This applies margin using Material-UI's sx prop
+        className="m-12"
+        sx={{ margin: "12px" }}
       >
         New Game
       </Button>
+
       <Typography variant="h6" className="mt-4" color="primary">
         Turns: {turns}
       </Typography>
+
       {isWin && (
         <Typography variant="h5" color="success.main" className="mb-6">
           You Win! 🎉
         </Typography>
       )}
 
-      {/* Updated Box Component with flex layout */}
       <Box
         display="flex"
         flexWrap="wrap"
