@@ -8,12 +8,14 @@ import {
   resetTurn,
   setWin,
 } from "../slices/gameSlice";
+import { Button, Typography, Box } from "@mui/material";
 
 const Game = () => {
   const dispatch = useDispatch();
   const { cards, turns, choiceOne, choiceTwo, disabled, isWin } = useSelector(
     (state) => state.game
   );
+
   const handleNewGame = () => {
     dispatch(shuffleCards());
   };
@@ -32,26 +34,59 @@ const Game = () => {
 
   return (
     <div className="App bg-slate-300 min-h-screen flex flex-col items-center justify-center text-white">
-      <h1 className="text-4xl font-bold mb-6">Magic Match</h1>
-      <button
+      <Typography
+        variant="h3"
+        component="h1"
+        className="mb-6"
+        sx={{ marginTop: "24px", color: "black" }}
+      >
+        Memory Match
+      </Typography>
+
+      <Button
+        variant="contained"
+        color="primary"
         onClick={handleNewGame}
-        className="bg-yellow-400 hover:bg-yellow-300 text-black font-semibold py-2 px-6 rounded-lg mb-4 shadow-md"
+        className="m-12" // This applies margin using Tailwind CSS
+        sx={{ margin: "12px" }} // This applies margin using Material-UI's sx prop
       >
         New Game
-      </button>
-      {isWin && <p className="text-2xl text-green-500 mb-6">You Win! 🎉</p>}
-      <div className="grid grid-cols-4 gap-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 justify-center  max-w-4xl px-4">
+      </Button>
+      <Typography variant="h6" className="mt-4" color="primary">
+        Turns: {turns}
+      </Typography>
+      {isWin && (
+        <Typography variant="h5" color="success.main" className="mb-6">
+          You Win! 🎉
+        </Typography>
+      )}
+
+      {/* Updated Box Component with flex layout */}
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        sx={{
+          maxWidth: "lg",
+          px: 2,
+        }}
+      >
         {cards.map((card) => (
-          <SingleCard
+          <Box
             key={card.id}
-            card={card}
-            handleChoice={handleCardChoice}
-            flipped={card === choiceOne || card === choiceTwo || card.matched}
-            disabled={disabled}
-          />
+            sx={{
+              margin: "20px",
+            }}
+          >
+            <SingleCard
+              card={card}
+              handleChoice={handleCardChoice}
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              disabled={disabled}
+            />
+          </Box>
         ))}
-      </div>
-      <p className="mt-4 text-xl">Turns: {turns}</p>
+      </Box>
     </div>
   );
 };
